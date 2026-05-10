@@ -1,0 +1,10 @@
+Deep Learning is a specialized branch of machine learning that uses artificial neural networks with many layers (hence the term "deep").
+
+These neural networks are inspired by the structure of the human brain and are particularly effective at processing large amounts of data.
+
+Deep learning is commonly used in:
+- Computer vision
+- Natural language processing
+- Speech recognition
+
+Popular deep learning frameworks include TensorFlow and PyTorch.
