@@ -1,17 +1,24 @@
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.llms.ollama import Ollama
 from pathlib import Path
+
+from llama_index.core import (
+    VectorStoreIndex,
+    SimpleDirectoryReader,
+    Settings
+)
+
+from llama_index.embeddings.huggingface import (
+    HuggingFaceEmbedding
+)
+
+from llama_index.llms.ollama import Ollama
 
 
 def build_index():
     try:
-        # Embeddings légers (OK pour 8GB)
         Settings.embed_model = HuggingFaceEmbedding(
             model_name="sentence-transformers/all-MiniLM-L6-v2"
         )
 
-        # LLM local
         Settings.llm = Ollama(
             model="qwen2.5:1.5b",
             request_timeout=120.0
@@ -36,22 +43,25 @@ def build_index():
 
 def query_index(index, question):
     if index is None:
-        return "No documents available."
+        return "No documents available"
 
     try:
-        query_engine = index.as_query_engine(similarity_top_k=3)
+        query_engine = index.as_query_engine(
+            similarity_top_k=3
+        )
+
         response = query_engine.query(question)
+
         return str(response)
 
     except Exception as e:
         return f"Query error: {e}"
 
 
-# 🔢 Compter les fichiers
 def count_documents():
     files = list(Path("./data").glob("*.txt"))
 
     if not files:
         return 0, []
 
-    return len(files), [f.name for f in files]
+    return len(files), [file.name for file in files]

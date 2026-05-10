@@ -2,14 +2,14 @@ from langchain_core.tools import tool
 from langchain_ollama import ChatOllama
 import math
 
-# LLM local
+
 llm = ChatOllama(model="qwen2.5:1.5b")
 
 
-# 🔢 CALCULATEUR (sécurisé)
 @tool
 def calculator(expression: str) -> str:
     """Evaluate a mathematical expression safely."""
+
     try:
         allowed_names = {
             "abs": abs,
@@ -18,28 +18,31 @@ def calculator(expression: str) -> str:
             "pow": pow
         }
 
-        result = eval(expression, {"__builtins__": {}}, allowed_names)
+        result = eval(
+            expression,
+            {"__builtins__": {}},
+            allowed_names
+        )
+
         return str(result)
 
     except Exception:
-        return "Error in calculation"
+        return "Calculation error"
 
 
-# 📄 SUMMARIZE (amélioré)
 @tool
 def summarize(text: str) -> str:
-    """Summarize a text using a local LLM."""
+    """Generate a short summary using the local model."""
 
     text = text.strip()
 
     if not text:
-        return "Error: no text provided."
+        return "No text provided"
 
-    # 🔒 limite pour performance
     text = text[:1000]
 
     prompt = f"""
-    Give a concise summary (1-2 sentences max) of the following text:
+    Give a concise summary of the following text in one or two sentences:
 
     {text}
     """
@@ -52,8 +55,8 @@ def summarize(text: str) -> str:
         return f"Summarization error: {e}"
 
 
-# 🌐 WEB SEARCH (offline)
 @tool
 def web_search(query: str) -> str:
-    """Simulate a web search (offline mode)."""
-    return f"[Offline mode] No internet access. General answer: {query}"
+    """Simulate a web search in offline mode."""
+
+    return f"No internet access. General information about: {query}"

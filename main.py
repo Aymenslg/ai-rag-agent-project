@@ -3,26 +3,31 @@ from workflow import process_query
 
 
 def main():
-    print("=== AI PROJECT (RAG + AGENT) ===\n")
+    print("AI Project")
+    print()
 
-    print("🔄 Loading documents...")
+    print("Loading documents...")
     index = build_index()
 
     if index is None:
-        print("⚠️ No documents found. RAG will be limited.\n")
+        print("No documents found. RAG features are limited.")
     else:
-        print("✅ Documents loaded successfully!\n")
+        print("Documents loaded successfully.")
 
-    print("💡 You can:")
-    print("- Ask questions about your documents")
-    print("- Use tools: summarize, search, or math (e.g., 2+2)")
-    print("- Type 'exit' to quit\n")
+    print()
+    print("Available features:")
+    print("- Ask questions about documents")
+    print("- Summarize text")
+    print("- Perform calculations")
+    print("- Simulate web search")
+    print("- Type 'exit' to quit")
+    print()
 
     while True:
         query = input("You: ").strip()
 
         if query.lower() in {"exit", "quit"}:
-            print("Bye 👋")
+            print("Goodbye")
             break
 
         if not query:
@@ -31,12 +36,14 @@ def main():
         try:
             response = process_query(index, query)
 
-            print("\n🤖 Answer:")
+            print()
+            print("Answer:")
             print(response)
             print()
 
         except Exception as e:
-            print(f"❌ Error: {e}\n")
+            print(f"Error: {e}")
+            print()
 
 
 if __name__ == "__main__":
